@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 124" width="240" height="248" role="img" aria-label="TRiScan">
+  <title>TRiScan</title>
+  <defs>
+    <linearGradient id="trs-cara" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#9c9c9c"/></linearGradient>
+    <radialGradient id="trs-sombra" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse cx="62" cy="113" rx="34" ry="6" fill="url(#trs-sombra)"/>
+  <path d="M28 26 H100 V44 H74 V104 H54 V44 H28 Z" fill="#2a2a2a"/>
+  <path d="M22 20 H94 V38 H68 V98 H48 V38 H22 Z" fill="url(#trs-cara)"/>
+  <path d="M22 20 H94 V38 H68 V98 H48 V38 H22 Z" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1"/>
+  <line x1="10" y1="64" x2="110" y2="64" stroke="#B9F227" stroke-width="9" stroke-opacity=".2"/>
+  <line x1="10" y1="64" x2="110" y2="64" stroke="#B9F227" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="80" cy="12" r="5" fill="#B9F227"/>
+</svg>

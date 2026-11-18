@@ -1,0 +1,40 @@
+# ia-inventario.yaml: declara qué IA usa tu proyecto.
+# Lo que escribas aquí lo revisa `triscan scan`. Borra lo que no uses y completa lo que sí.
+version: 1
+proyecto: mi-proyecto
+
+modelos:
+  - id: modelo-clasificador
+    dueno: equipo-ml@empresa.com        # persona o equipo responsable
+    version: "1.0.0"
+    origen: huggingface.co/org/modelo   # de dónde viene (o "interno")
+    revision: "commit-o-etiqueta"       # fija la revisión exacta del modelo
+    formato: safetensors                # evita pickle / .pt / .bin
+    datos: [interno]                    # publico | interno | personal | sensible
+    aprobado_por: nombre@empresa.com
+    fecha_aprobacion: 2026-01-15
+
+agentes:
+  - id: agente-soporte
+    dueno: equipo-soporte@empresa.com
+    modelo: modelo-clasificador
+    datos: [personal]
+    herramientas: [buscar_base_conocimiento, redactar_borrador]
+    permisos: minimo                    # minimo | amplio
+    aprobacion_humana: true             # obligatorio si tiene herramientas críticas (enviar, borrar, ejecutar, pagar...)
+    presupuesto:                        # al menos uno
+      max_tokens: 20000
+      max_pasos: 15
+      max_costo_usd: 2
+    guardrails:
+      entrada: true
+      salida: true
+    registros:
+      destino: s3://registros-inmutables/agente-soporte
+      inmutable: true
+      evidencia: https://wiki.empresa.com/registros-ia
+    alertas: true
+    registra_razonamiento: true
+    usa_rag: true
+    citas: true
+    ultima_prueba_red_team: 2026-10-20   # AAAA-MM-DD

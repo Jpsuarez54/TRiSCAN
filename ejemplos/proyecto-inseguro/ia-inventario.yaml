@@ -1,0 +1,17 @@
+# Ejemplo A PROPÓSITO inseguro: sirve para ver cómo falla triscan.
+version: 1
+proyecto: soporte-inseguro
+
+modelos:
+  - id: modelo-soporte
+    origen: huggingface.co/org/modelo-soporte
+    formato: pickle            # formato riesgoso
+    # sin dueño, sin versión, sin clase de datos
+
+agentes:
+  - id: agente-soporte
+    modelo: modelo-soporte
+    herramientas: [buscar_kb, ejecutar_shell, enviar_correo]
+    permisos: amplio           # permisos amplios
+    # sin tope de presupuesto, sin aprobación humana, sin guardrails,
+    # sin registros inmutables, sin alertas y sin guardar el razonamiento

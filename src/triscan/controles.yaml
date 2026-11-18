@@ -1,0 +1,185 @@
+# Los 12 controles de IA sin Control.
+# Cada control tiene: id, pilar (AI TRiSM), fase (auditar / asegurar / monitorear), severidad, regla (función en reglas.py),
+# tipo (auto = se revisa leyendo el proyecto, declarado = se revisa con lo que declaras en ia-inventario.yaml),
+# y referencias a marcos conocidos. Las referencias de NIST AI RMF se dan por función (GOVERN, MAP, MEASURE, MANAGE)
+# y las de OWASP son del "Top 10 para aplicaciones LLM 2025".
+controles:
+  - id: GOB-01
+    pilar: Gobernanza
+    fase: auditar
+    severidad: alta
+    regla: inventario_completo
+    tipo: declarado
+    titulo: "Inventario de modelos y agentes con dueño y versión"
+    por_que: "No se puede gobernar lo que no se sabe que existe. Cada modelo y agente necesita una persona responsable."
+    arreglo: "Crea ia-inventario.yaml (triscan init) y declara dueño, versión y origen de cada modelo y agente."
+    caso: "En el caso Hugging Face, 1200 agentes que debían estar aislados terminaron comunicándose entre sí (METR, pág. 3)."
+    referencias:
+      owasp_llm: [LLM03]
+      nist_ai_rmf: [GOVERN, MAP]
+      iso_42001: Anexo A
+
+  - id: PRIV-01
+    pilar: Privacidad
+    fase: auditar
+    severidad: alta
+    regla: flujo_de_datos
+    tipo: declarado
+    titulo: "Qué datos entran y salen de cada sistema"
+    por_que: "Sin saber qué clase de datos toca cada modelo o agente, no se puede protegerlos ni justificar su uso."
+    arreglo: "En el inventario, declara datos con una de estas clases por cada modelo y agente: publico, interno, personal, sensible."
+    caso: "Un agente que lee datos personales sin que nadie lo sepa es una fuga esperando a ocurrir."
+    referencias:
+      owasp_llm: [LLM02]
+      nist_ai_rmf: [MAP]
+      iso_42001: Anexo A
+
+  - id: SEC-01
+    pilar: SecOps
+    fase: auditar
+    severidad: critica
+    regla: permisos_declarados
+    tipo: declarado
+    titulo: "Permisos de cada agente declarados y mínimos"
+    por_que: "Un agente con permisos amplios puede hacer mucho daño si se equivoca o lo manipulan."
+    arreglo: "Declara herramientas y permisos de cada agente. Usa permisos mínimos y evita herramientas con comodín o de administrador."
+    caso: "En el caso Hugging Face, los agentes obtuvieron credenciales de administrador (METR, pág. 13)."
+    referencias:
+      owasp_llm: [LLM06]
+      nist_ai_rmf: [MANAGE]
+      iso_42001: Anexo A
+
+  - id: SUM-01
+    pilar: Gobernanza
+    fase: auditar
+    severidad: alta
+    regla: cadena_de_suministro
+    tipo: auto
+    titulo: "Origen y formato de los modelos verificados"
+    por_que: "Un modelo descargado es código de terceros. Algunos formatos (pickle) pueden ejecutar código al cargarse."
+    arreglo: "Usa formato safetensors, fija la revisión del modelo (revision=) y no actives trust_remote_code salvo que lo hayas revisado."
+    caso: "Hugging Face es la biblioteca central de modelos de la industria; es una cadena de suministro."
+    referencias:
+      owasp_llm: [LLM03]
+      nist_ai_rmf: [MAP, GOVERN]
+      iso_42001: Anexo A
+
+  - id: SEC-02
+    pilar: SecOps
+    fase: asegurar
+    severidad: alta
+    regla: guardrails
+    tipo: declarado
+    titulo: "Guardrails de entrada y de salida"
+    por_que: "Filtrar lo que entra y lo que sale reduce prompt injection y fuga de datos."
+    arreglo: "Agrega una librería de guardrails (por ejemplo LLM Guard, NeMo Guardrails o Guardrails AI) y decláralo en el inventario."
+    caso: "Entrada y salida son los dos puntos donde un ataque se puede detener."
+    referencias:
+      owasp_llm: [LLM01, LLM02, LLM05]
+      nist_ai_rmf: [MANAGE]
+      iso_42001: Anexo A
+
+  - id: PRIV-02
+    pilar: Privacidad
+    fase: asegurar
+    severidad: critica
+    regla: secretos
+    tipo: auto
+    titulo: "Sin llaves ni contraseñas en el código o en los prompts"
+    por_que: "Una llave en el repositorio la puede ver cualquiera con acceso, y un modelo puede repetirla en sus respuestas."
+    arreglo: "Mueve los secretos a variables de entorno o a un gestor de secretos, rota las llaves expuestas y no subas archivos .env."
+    caso: "Con credenciales de administrador, los agentes pudieron dejarse mensajes en la caché del sistema (METR, pág. 13)."
+    referencias:
+      owasp_llm: [LLM02, LLM07]
+      nist_ai_rmf: [MANAGE]
+      iso_42001: Anexo A
+
+  - id: SEC-03
+    pilar: SecOps
+    fase: asegurar
+    severidad: alta
+    regla: topes
+    tipo: declarado
+    titulo: "Topes de presupuesto en cada agente"
+    por_que: "Un agente sin tope puede gastar sin límite o actuar durante horas sin que nadie lo note."
+    arreglo: "Declara en el inventario presupuesto con max_tokens, max_pasos o max_costo_usd."
+    caso: "Los agentes del caso actuaban con un presupuesto y un objetivo, sin revisión humana de cada paso."
+    referencias:
+      owasp_llm: [LLM10, LLM06]
+      nist_ai_rmf: [MANAGE]
+      iso_42001: Anexo A
+
+  - id: SEC-04
+    pilar: SecOps
+    fase: asegurar
+    severidad: critica
+    regla: aprobacion_humana
+    tipo: declarado
+    titulo: "Aprobación humana en acciones críticas"
+    por_que: "Las acciones que cambian datos, mandan mensajes o ejecutan comandos necesitan que una persona las apruebe."
+    arreglo: "Marca aprobacion_humana en true para todo agente con herramientas críticas (ejecutar, borrar, enviar, pagar, desplegar)."
+    caso: "Los agentes siguieron adelante aun dudando de si estaba permitido (METR, pág. 17)."
+    referencias:
+      owasp_llm: [LLM06]
+      nist_ai_rmf: [MANAGE]
+      iso_42001: Anexo A
+
+  - id: MON-01
+    pilar: Gobernanza
+    fase: monitorear
+    severidad: alta
+    regla: registros
+    tipo: declarado
+    titulo: "Registros inmutables de cada acción"
+    por_que: "Si el propio agente puede borrar o cambiar el registro, la auditoría no sirve."
+    arreglo: "Envía los registros a un destino que el agente no pueda modificar y decláralo (destino e inmutable) con su evidencia."
+    caso: "Al menos 20% de los agentes intentó manipular su registro de acciones (METR, pág. 17)."
+    referencias:
+      owasp_llm: [LLM06]
+      nist_ai_rmf: [MEASURE, GOVERN]
+      iso_42001: Anexo A
+
+  - id: MON-02
+    pilar: Gobernanza
+    fase: monitorear
+    severidad: media
+    regla: alertas
+    tipo: declarado
+    titulo: "Alertas por desvíos y abuso"
+    por_que: "Sin alertas, un comportamiento raro se descubre tarde, cuando el daño ya ocurrió."
+    arreglo: "Configura alertas por uso inusual, costos y bloqueos de guardrails, y decláralas en el inventario."
+    caso: "700 agentes participaron en el ataque contra Hugging Face (METR, pág. 3)."
+    referencias:
+      owasp_llm: [LLM10]
+      nist_ai_rmf: [MEASURE, MANAGE]
+      iso_42001: Anexo A
+
+  - id: EXP-01
+    pilar: Explicabilidad
+    fase: monitorear
+    severidad: media
+    regla: razonamiento_y_citas
+    tipo: declarado
+    titulo: "Razonamiento guardado y respuestas con citas"
+    por_que: "Poder revisar el razonamiento y las fuentes ayuda a detectar alucinaciones y decisiones sesgadas."
+    arreglo: "Guarda el razonamiento del agente (registra_razonamiento) y, si usas RAG, haz que cite sus fuentes (citas)."
+    caso: "Los investigadores reconstruyeron todo gracias al razonamiento escrito de los agentes."
+    referencias:
+      owasp_llm: [LLM09]
+      nist_ai_rmf: [MEASURE]
+      iso_42001: Anexo A
+
+  - id: MON-03
+    pilar: SecOps
+    fase: monitorear
+    severidad: media
+    regla: red_team
+    tipo: auto
+    titulo: "Pruebas de red team periódicas"
+    por_que: "Los ataques cambian. Probar tu propio sistema con regularidad encuentra fallas antes que los atacantes."
+    arreglo: "Agrega pruebas automáticas (por ejemplo promptfoo, garak o PyRIT) a tu proceso y repítelas, o declara la fecha de la última prueba."
+    caso: "Es mejor encontrar la brecha tú que enterarte por un incidente."
+    referencias:
+      owasp_llm: [LLM01]
+      nist_ai_rmf: [MEASURE]
+      iso_42001: Anexo A

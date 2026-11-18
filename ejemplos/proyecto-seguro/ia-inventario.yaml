@@ -1,0 +1,51 @@
+# Ejemplo de un inventario que cumple los 12 controles.
+version: 1
+proyecto: soporte-seguro
+
+modelos:
+  - id: modelo-soporte
+    dueno: equipo-ml@empresa.com
+    version: "1.2.0"
+    origen: huggingface.co/org/modelo-soporte
+    revision: "a1b2c3d4e5f6"
+    formato: safetensors
+    datos: [interno]
+    aprobado_por: seguridad@empresa.com
+    fecha_aprobacion: 2026-10-01
+
+agentes:
+  - id: agente-soporte
+    dueno: equipo-soporte@empresa.com
+    modelo: modelo-soporte
+    datos: [personal]
+    herramientas: [buscar_base_conocimiento, redactar_borrador]
+    permisos: minimo
+    presupuesto:
+      max_tokens: 20000
+      max_pasos: 15
+      max_costo_usd: 2
+    guardrails: {entrada: true, salida: true}
+    registros:
+      destino: s3://registros-inmutables/agente-soporte
+      inmutable: true
+      evidencia: https://wiki.empresa.com/registros-ia
+    alertas: true
+    registra_razonamiento: true
+    usa_rag: true
+    citas: true
+
+  - id: agente-correo
+    dueno: equipo-soporte@empresa.com
+    modelo: modelo-soporte
+    datos: [personal]
+    herramientas: [enviar_correo]
+    permisos: minimo
+    aprobacion_humana: true          # herramienta crítica: una persona aprueba cada envío
+    presupuesto: {max_pasos: 5}
+    guardrails: {entrada: true, salida: true}
+    registros:
+      destino: s3://registros-inmutables/agente-correo
+      inmutable: true
+      evidencia: https://wiki.empresa.com/registros-ia
+    alertas: true
+    registra_razonamiento: true

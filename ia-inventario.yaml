@@ -1,0 +1,82 @@
+# ia-inventario.yaml · BORRADOR generado por `ia-check descubrir`.
+# Detecta patrones en el código: puede equivocarse o dejar cosas fuera. Revísalo.
+# Lo marcado con 'COMPLETA' solo lo puedes saber tú. Cuando termines: ia-check scan .
+version: 1
+proyecto: ia-sin-control
+
+modelos:
+  - id: gpt-4o-mini
+    dueno:                      # COMPLETA: persona o equipo responsable
+    version:                    # COMPLETA: versión o fecha del modelo
+    origen: api:openai
+    datos: []                   # COMPLETA: publico | interno | personal | sensible
+    # visto en: ejemplos/poc-app-soporte/app-original/app/agente.py, ejemplos/poc-app-soporte/arreglos-paso-4/app/agente.py
+  - id: org/clasificador-tickets
+    dueno:                      # COMPLETA: persona o equipo responsable
+    version:                    # COMPLETA: versión o fecha del modelo
+    origen: huggingface.co/org/clasificador-tickets
+    revision:    # COMPLETA: commit exacto del modelo
+    formato:                    # COMPLETA: safetensors (recomendado), pickle, pt...
+    datos: []                   # COMPLETA: publico | interno | personal | sensible
+    # visto en: ejemplos/poc-app-soporte/app-original/app/clasificador.py, ejemplos/poc-app-soporte/arreglos-paso-4/app/clasificador.py
+  - id: org/modelo-soporte
+    dueno:                      # COMPLETA: persona o equipo responsable
+    version:                    # COMPLETA: versión o fecha del modelo
+    origen: huggingface.co/org/modelo-soporte
+    revision: a1b2c3d4e5f6   # fijada en el código
+    formato:                    # COMPLETA: safetensors (recomendado), pickle, pt...
+    datos: []                   # COMPLETA: publico | interno | personal | sensible
+    # visto en: ejemplos/proyecto-inseguro/app.py, ejemplos/proyecto-seguro/app.py
+
+agentes:
+  - id: ejemplos/poc-app-soporte/app-original/app/agente
+    tipo: agente
+    archivo: ejemplos/poc-app-soporte/app-original/app/agente.py
+    dueno:                      # COMPLETA: persona o equipo responsable
+    modelo: gpt-4o-mini
+    datos: []                   # COMPLETA: publico | interno | personal | sensible
+    herramientas: [buscar_en_base_conocimiento, consultar_pedido, enviar_correo_cliente, reembolsar_pedido]
+    permisos:                   # COMPLETA: minimo | amplio
+    aprobacion_humana: false    # ATENCIÓN: herramientas críticas (enviar_correo_cliente, reembolsar_pedido). ¿Una persona aprueba cada acción? Cambia a true solo si es cierto
+    usa_rag: true
+    citas:                      # COMPLETA: true si las respuestas citan sus fuentes
+    # Faltan por declarar (ver docs/inventario.md): presupuesto, guardrails, registros, alertas, registra_razonamiento
+    presupuesto: {}             # COMPLETA: max_tokens, max_pasos o max_costo_usd
+    guardrails: {entrada: false, salida: false}   # COMPLETA
+    registros: {}               # COMPLETA: destino, inmutable, evidencia
+    alertas: false              # COMPLETA
+    registra_razonamiento: false   # COMPLETA
+
+  - id: ejemplos/poc-app-soporte/arreglos-paso-4/app/agente
+    tipo: agente
+    archivo: ejemplos/poc-app-soporte/arreglos-paso-4/app/agente.py
+    dueno:                      # COMPLETA: persona o equipo responsable
+    modelo: gpt-4o-mini
+    datos: []                   # COMPLETA: publico | interno | personal | sensible
+    herramientas: [buscar_en_base_conocimiento, consultar_pedido, enviar_correo_cliente, reembolsar_pedido]
+    permisos:                   # COMPLETA: minimo | amplio
+    aprobacion_humana: false    # ATENCIÓN: herramientas críticas (enviar_correo_cliente, reembolsar_pedido). ¿Una persona aprueba cada acción? Cambia a true solo si es cierto
+    usa_rag: true
+    citas:                      # COMPLETA: true si las respuestas citan sus fuentes
+    # Faltan por declarar (ver docs/inventario.md): presupuesto, guardrails, registros, alertas, registra_razonamiento
+    presupuesto: {}             # COMPLETA: max_tokens, max_pasos o max_costo_usd
+    guardrails: {entrada: false, salida: false}   # COMPLETA
+    registros: {}               # COMPLETA: destino, inmutable, evidencia
+    alertas: false              # COMPLETA
+    registra_razonamiento: false   # COMPLETA
+
+  - id: src/ia_check/descubrir
+    tipo: agente
+    archivo: src/ia_check/descubrir.py
+    dueno:                      # COMPLETA: persona o equipo responsable
+    modelo:    # COMPLETA: id de un modelo de la lista de arriba
+    datos: []                   # COMPLETA: publico | interno | personal | sensible
+    herramientas: []
+    permisos:                   # COMPLETA: minimo | amplio
+    aprobacion_humana: false    # cámbialo a true si una persona aprueba las acciones del agente
+    # Faltan por declarar (ver docs/inventario.md): presupuesto, guardrails, registros, alertas, registra_razonamiento
+    presupuesto: {}             # COMPLETA: max_tokens, max_pasos o max_costo_usd
+    guardrails: {entrada: false, salida: false}   # COMPLETA
+    registros: {}               # COMPLETA: destino, inmutable, evidencia
+    alertas: false              # COMPLETA
+    registra_razonamiento: false   # COMPLETA

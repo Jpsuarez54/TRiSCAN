@@ -1,0 +1,17 @@
+# Lo que respondería una persona al completar el borrador, siendo honesta con el estado ACTUAL del proyecto.
+modelos:
+  gpt-4o-mini:
+    dueno: equipo-ia@acme.com
+    version: "2024-07-18"
+    datos: [personal]
+  org/clasificador-tickets:
+    dueno: equipo-ia@acme.com
+    version: "1.0.0"
+    formato: safetensors
+    datos: [interno]
+agentes:
+  app/agente:
+    dueno: equipo-soporte@acme.com
+    datos: [personal]
+    permisos: amplio
+    citas: false

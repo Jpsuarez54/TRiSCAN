@@ -1,0 +1,28 @@
+# Después de hacer los arreglos de arreglos-paso-4/: ahora SÍ es cierto lo que se declara.
+modelos:
+  gpt-4o-mini:
+    dueno: equipo-ia@acme.com
+    version: "2024-07-18"
+    datos: [personal]
+  org/clasificador-tickets:
+    dueno: equipo-ia@acme.com
+    version: "1.0.0"
+    revision: "9f1c2ab"
+    formato: safetensors
+    datos: [interno]
+agentes:
+  app/agente:
+    dueno: equipo-soporte@acme.com
+    datos: [personal]
+    permisos: minimo
+    aprobacion_humana: true
+    presupuesto: {max_pasos: 8, max_tokens: 8000}
+    guardrails: {entrada: true, salida: true}
+    registros:
+      destino: s3://acme-registros-ia (Object Lock)
+      inmutable: true
+      evidencia: https://wiki.acme.com/ia/registros
+    alertas: true
+    registra_razonamiento: true
+    usa_rag: true
+    citas: true

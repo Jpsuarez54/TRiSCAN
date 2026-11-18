@@ -1,0 +1,34 @@
+# Copia este archivo a .github/workflows/triscan.yml en tu proyecto.
+# Revisa que las versiones de las acciones sean las vigentes.
+name: triscan
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  triscan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write   # para subir el informe SARIF
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar triscan
+        run: pip install git+https://github.com/Jpsuarez54/triscan
+      - name: Revisar
+        run: triscan scan . -f html -f sarif --falla-en alta
+      - name: Subir hallazgos a GitHub (pestaña Security)
+        if: always()
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: triscan-reporte/triscan.sarif
+      - name: Guardar el informe
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: informe-triscan
+          path: triscan-reporte/reporte.html
