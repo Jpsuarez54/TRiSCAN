@@ -8,6 +8,22 @@ Nació de la charla *"IA sin Control: del boom a la brecha de seguridad"* (BoyaC
 
 > ⚠️ **Es una primera mirada, no una garantía.** `triscan` encuentra problemas comunes y deja evidencia para una auditoría. Que salga 100/100 no prueba que tu sistema sea seguro.
 
+## Así se ve
+
+Salida real de `triscan scan` sobre los dos proyectos de ejemplo de este repositorio.
+
+| Antes: `ejemplos/proyecto-inseguro` (0/100) | Después: `ejemplos/proyecto-seguro` (100/100) |
+|---|---|
+| ![Terminal: proyecto inseguro, 12 controles fallan](docs/img/terminal-antes.png) | ![Terminal: proyecto seguro, 12 controles cumplen](docs/img/terminal-despues.png) |
+
+Además de la terminal, `triscan scan` genera un informe visual (`triscan-reporte/reporte.html`) con el puntaje, lo urgente primero y cómo arreglar cada falla.
+
+| Antes: `ejemplos/proyecto-inseguro` (0/100) | Después: `ejemplos/proyecto-seguro` (100/100) |
+|---|---|
+| ![Informe visual: puntaje 0 de 100, lo más urgente primero y puntaje por pilar](docs/img/informe-inseguro.png) | ![Informe visual: puntaje 100 de 100 y los 12 controles cumplen](docs/img/informe-seguro.png) |
+
+Puedes abrir dos informes de ejemplo en [`docs/ejemplos/`](docs/ejemplos/): descárgalos y ábrelos en tu navegador.
+
 ## Mapa del repositorio
 
 ```

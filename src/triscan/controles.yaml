@@ -1,4 +1,4 @@
-# Los 12 controles de IA sin Control.
+# Los 12 controles de TRiScan.
 # Cada control tiene: id, pilar (AI TRiSM), fase (auditar / asegurar / monitorear), severidad, regla (función en reglas.py),
 # tipo (auto = se revisa leyendo el proyecto, declarado = se revisa con lo que declaras en ia-inventario.yaml),
 # y referencias a marcos conocidos. Las referencias de NIST AI RMF se dan por función (GOVERN, MAP, MEASURE, MANAGE)

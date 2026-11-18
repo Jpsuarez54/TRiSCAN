@@ -121,6 +121,17 @@ SEV = {"baja": 1, "media": 2, "alta": 3, "critica": 4}
 NOMBRE_SEV = {"baja": "Baja", "media": "Media", "alta": "Alta", "critica": "Crítica"}
 INICIAL = {"SecOps": "S", "Privacidad": "P", "Gobernanza": "G", "Explicabilidad": "E"}
 
+# Logo de TRiScan (la T con volumen y la línea de escaneo), el mismo de docs/img/triscan-icono.svg
+_LOGO = ('<svg viewBox="0 0 120 124" aria-hidden="true"><defs>'
+         '<linearGradient id="trs-cara" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#9c9c9c"/></linearGradient>'
+         '</defs><path d="M28 26 H100 V44 H74 V104 H54 V44 H28 Z" fill="#2a2a2a"/>'
+         '<path d="M22 20 H94 V38 H68 V98 H48 V38 H22 Z" fill="url(#trs-cara)"/>'
+         '<line x1="10" y1="64" x2="110" y2="64" stroke="#B9F227" stroke-width="9" stroke-opacity=".2"/>'
+         '<line x1="10" y1="64" x2="110" y2="64" stroke="#B9F227" stroke-width="3" stroke-linecap="round"/>'
+         '<circle cx="80" cy="12" r="5" fill="#B9F227"/></svg>')
+_FAVICON = ("data:image/svg+xml," + _LOGO.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ')
+            .replace("#", "%23").replace('"', "'"))
+
 _CSS = """
 :root{--bg:#0B0A12;--card:rgba(255,255,255,.05);--line:rgba(255,255,255,.14);--tx:#f4f2fa;--mut:#aaa4c0;--ok:#B6F23C;--fail:#FF7043;--warn:#FFC857;--pen:#7fd6ff;--ease:cubic-bezier(.16,1,.3,1)}
 *{box-sizing:border-box}
@@ -131,7 +142,8 @@ body{margin:0;color:var(--tx);font:16px/1.55 Inter,"Segoe UI",system-ui,-apple-s
 main{max-width:1080px;margin:0 auto;padding:28px 22px 90px}
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px}
-.brand i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#FF8A3D,#8B3DFF)}
+.brand svg{width:40px;height:41px;display:block}
+.brand .i{color:#B9F227}
 .meta{color:var(--mut);font-size:13px}
 h1{font-size:clamp(30px,5vw,46px);line-height:1.08;margin:26px 0 6px;letter-spacing:-.02em}
 h1 span{background:linear-gradient(90deg,#FF8A3D,#8B3DFF);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -144,7 +156,7 @@ h1 span{background:linear-gradient(90deg,#FF8A3D,#8B3DFF);-webkit-background-cli
 @keyframes fill{from{stroke-dasharray:0 440}to{stroke-dasharray:var(--len) 440}}
 .gauge .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .gauge .num b{font-size:64px;line-height:1;letter-spacing:-.03em}
-.gauge .num span{color:var(--mut);font-size:14px}
+.gauge .num>span{color:var(--mut);font-size:14px}
 .hero h2{margin:0 0 6px;font-size:28px;letter-spacing:-.01em}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.06);font-size:14px}
@@ -303,8 +315,8 @@ def html_(inf: Dict) -> str:
                          [("todos", "Todos los pilares")] + [(p, p) for p in PILARES]))
     return (
         f'<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-        f'<title>Informe TRiScan</title><style>{_CSS}</style></head><body><main>'
-        f'<div class="top"><div class="brand"><i></i>IA sin Control</div>'
+        f'<title>Informe TRiScan</title><link rel="icon" href="{_FAVICON}"><style>{_CSS}</style></head><body><main>'
+        f'<div class="top"><div class="brand">{_LOGO}<span>TR<span class="i">i</span>Scan</span></div>'
         f'<div class="meta">TRiScan {e(inf["version"])} · {e(inf["fecha"])} · inventario: {e(inf["inventario"] or "no encontrado")}</div></div>'
         f'<h1>Informe de <span>AI TRiSM</span></h1><p class="lead">Revisión de tu proyecto contra 12 controles de seguridad, privacidad, gobernanza y explicabilidad.</p>'
         f'<section class="hero"><div class="gauge"><svg viewBox="0 0 160 160"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">'
