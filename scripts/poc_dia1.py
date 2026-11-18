@@ -109,7 +109,7 @@ def resumen_html(trabajo: Path, pasos: list) -> Path:
     @media(max-width:900px){.pasos{grid-template-columns:1fr 1fr}}"""
     doc = (f'<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
            f'<title>POC día 1 · triscan</title><style>{css}</style></head><body><main>'
-           f'<div class="top"><div class="brand"><i></i>IA sin Control</div><div class="meta">POC del día 1</div></div>'
+           f'<div class="top"><div class="brand"><i></i>TRiScan</div><div class="meta">POC del día 1</div></div>'
            f'<h1>De <span>{pasos[0]["cumplen"]}/12</span> a <span>{pasos[-1]["cumplen"]}/12</span> en 4 pasos</h1>'
            f'<p class="lead">Un agente de soporte real (OpenAI + base de conocimiento + clasificador de Hugging Face), revisado desde cero. '
            f'Haz clic en cada paso para ver su informe.</p><div class="pasos">{cards}</div>'

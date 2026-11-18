@@ -13,7 +13,7 @@ python -m pytest
 
 ## Agregar o cambiar una regla
 
-1. Describe el control en `src/triscan/controles.yaml`: `id`, `pilar`, `fase`, `severidad`, `por_que`, `arreglo`, `caso` y `referencias`.
+1. Describe el control en `src/triscan/controles.yaml`: `id`, `pilar`, `fase`, `severidad`, `por_que`, `arreglo`, `riesgo` y `referencias`.
 2. Escribe la regla en `src/triscan/reglas.py` y regístrala en el diccionario `REGLAS`.
 3. Agrega pruebas en `tests/` con **un caso que falla y uno que cumple**. Si encontraste un falso positivo, agrega una prueba que lo evite.
 4. Si cambia lo que se declara en el inventario, actualiza `plantilla_inventario.yaml` y los dos ejemplos de `ejemplos/`.

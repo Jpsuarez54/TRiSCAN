@@ -25,5 +25,4 @@ git push -u origin main
 
 - Activa **Issues** y agrega los temas `ai-trism`, `llm-security`, `owasp`, `espanol`.
 - Crea una **versión** (Release) `v0.1.0`.
-- Pon el enlace al repositorio en tu charla (código QR en la última diapositiva).
 - Opcional: publícalo en PyPI para que se instale con `pip install triscan`.

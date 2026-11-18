@@ -4,7 +4,7 @@
 
 **Checklist ejecutable de AI TRiSM.** Revisa un proyecto que usa IA contra 12 controles de seguridad, privacidad, gobernanza y explicabilidad, y te entrega un informe con lo que falta y cómo arreglarlo.
 
-Nació de la charla *"IA sin Control: del boom a la brecha de seguridad"* (BoyaConf 2026). Este repositorio contiene solo la herramienta. Cada control está atado a algo que falló en el caso real que se cuenta en la charla: agentes de IA con permisos de más, sin aprobación humana y con registros que podían alterar (informe técnico independiente de METR, 26 de agosto de 2026).
+Cada control apunta a un riesgo concreto de los sistemas con IA: agentes con permisos de más, acciones sin aprobación humana, registros que se pueden alterar, llaves en el código o modelos de origen desconocido.
 
 > ⚠️ **Es una primera mirada, no una garantía.** `triscan` encuentra problemas comunes y deja evidencia para una auditoría. Que salga 100/100 no prueba que tu sistema sea seguro.
 
@@ -197,7 +197,7 @@ Lee [`CONTRIBUTING.md`](CONTRIBUTING.md). Las ideas más útiles: nuevas reglas 
 - [x] `triscan descubrir`: borrador automático del inventario (detección por patrones en Python y JS/TS)
 - [ ] `--base`: ignorar los problemas que ya existían y fallar solo por los nuevos
 - [ ] `triscan survey`: cuestionario guiado para quien no lee código
-- [ ] Simulador interactivo del caso Hugging Face (activa controles y mira cómo se frena el ataque)
+- [ ] Simulador interactivo de un ataque con agentes (activa controles y mira cómo se frena)
 - [ ] Más reglas para JavaScript/TypeScript
 - [ ] Plantillas de políticas en español
 

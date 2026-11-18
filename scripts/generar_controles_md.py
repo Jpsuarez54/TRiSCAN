@@ -18,7 +18,7 @@ for c in controles:
           f"- **Cómo se revisa:** {'leyendo el proyecto' if c['tipo'] == 'auto' else 'con lo que declaras en ia-inventario.yaml'}",
           f"- **Por qué importa:** {c['por_que']}",
           f"- **Cómo arreglarlo:** {c['arreglo']}",
-          f"- **En la charla:** {c['caso']}",
+          f"- **Riesgo:** {c['riesgo']}",
           f"- **Referencias:** OWASP LLM {', '.join(r.get('owasp_llm', []))} · NIST AI RMF {', '.join(r.get('nist_ai_rmf', []))} · ISO/IEC 42001 {r.get('iso_42001', '')}"]
 (RAIZ / "docs" / "controles.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 print("Escribí docs/controles.md")

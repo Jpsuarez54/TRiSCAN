@@ -306,7 +306,7 @@ def html_(inf: Dict) -> str:
             f'severidad <span class="sev-{c["severidad"]}">{NOMBRE_SEV[c["severidad"]]}</span></small></span>'
             f'<span class="est {c["estado"]}">{NOMBRE_ESTADO[c["estado"]]}</span></summary>'
             f'<div class="cuerpo"><p>{e(c["por_que"])}</p><ul class="hall">{"".join(items)}</ul>{fix}'
-            f'<div class="caso">En la charla: {e(c["caso"])}</div>'
+            f'<div class="caso">Riesgo: {e(c["riesgo"])}</div>'
             f'<div class="refs">{"".join(f"<span>{e(x)}</span>" for x in refs)}</div></div></details>')
     filtros = ("".join(f'<button data-f="{f}"{" class=on" if f == "todos" else ""}>{t}</button>' for f, t in
                        (("todos", "Todos"), ("falla", "Fallan"), ("pendiente", "Pendientes"), ("aviso", "Con avisos"), ("cumple", "Cumplen")))
